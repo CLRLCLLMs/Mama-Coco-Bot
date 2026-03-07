@@ -596,6 +596,171 @@ footer {
   letter-spacing: .1em; text-transform: uppercase;
   color: rgba(200,169,122,.25);
 }
+
+/* ═══════════════════════════════════════
+   CHAT MODAL
+═══════════════════════════════════════ */
+#chat-modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(4,6,12,0.82);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#chat-modal-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+#chat-modal {
+  width: 100%; max-width: 600px;
+  height: min(88vh, 780px);
+  background: linear-gradient(160deg, #0d1220 0%, #0a0600 100%);
+  border: 1px solid rgba(244,197,66,0.28);
+  border-radius: 22px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(244,197,66,0.06);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+#chat-modal-overlay.open #chat-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* Modal header */
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid rgba(244,197,66,0.1);
+  flex-shrink: 0;
+  background: rgba(6,10,20,0.6);
+}
+.modal-title-row { display:flex; align-items:center; gap:10px; }
+.modal-avatar {
+  width:38px; height:38px; border-radius:50%;
+  background: radial-gradient(circle at 40% 35%, #e8a040, #8b3500);
+  border: 2px solid rgba(244,197,66,0.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem;
+  box-shadow: 0 0 14px rgba(255,140,0,0.28);
+  animation: ringPulse 4s ease-in-out infinite;
+}
+.modal-title { font-family:'Playfair Display',serif; font-size:.95rem; color:var(--gold); }
+.modal-subtitle { font-family:'Noto Sans',sans-serif; font-size:.62rem; color:var(--cream-muted); opacity:.65; font-style:italic; }
+.modal-lang-pills {
+  display:flex; gap:5px; flex-wrap:wrap; margin-top:10px;
+  padding: 0 20px 12px;
+  border-bottom: 1px solid rgba(244,197,66,0.08);
+  flex-shrink: 0;
+}
+.modal-lang-pill {
+  background:rgba(244,197,66,.07); border:1px solid rgba(244,197,66,.18);
+  color:var(--cream-muted); font-family:'Noto Sans',sans-serif;
+  font-size:.6rem; letter-spacing:.06em; padding:3px 9px;
+  border-radius:18px; cursor:pointer; transition:all .2s; text-transform:uppercase;
+}
+.modal-lang-pill:hover,.modal-lang-pill.active {
+  background:rgba(244,197,66,.18); border-color:rgba(244,197,66,.5); color:var(--gold);
+}
+.modal-close {
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(244,197,66,.18);
+  color:var(--cream-muted); font-size:.9rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s; flex-shrink:0;
+}
+.modal-close:hover { background:rgba(244,197,66,.15); color:var(--gold); }
+
+/* Modal messages */
+#modal-chat-area {
+  flex:1; overflow-y:auto; padding:16px 18px 10px;
+  display:flex; flex-direction:column; gap:0;
+  scrollbar-width:thin; scrollbar-color:rgba(244,197,66,.12) transparent;
+}
+.modal-mama-bubble {
+  background:linear-gradient(135deg,rgba(61,28,0,.55),rgba(20,10,0,.72));
+  border:1px solid rgba(244,197,66,.17); border-radius:14px 14px 14px 4px;
+  padding:14px 18px; position:relative; overflow:hidden; margin-bottom:12px;
+  backdrop-filter:blur(4px);
+}
+.modal-mama-bubble::before {
+  content:'"'; position:absolute; top:-10px; left:10px;
+  font-family:'Playfair Display',serif; font-size:5.5rem;
+  color:rgba(244,197,66,.06); line-height:1; pointer-events:none;
+}
+.modal-user-bubble {
+  align-self:flex-end;
+  background:rgba(20,50,30,.65); border:1px solid rgba(100,200,100,.18);
+  border-radius:14px 14px 4px 14px; padding:9px 14px;
+  font-size:.86rem; line-height:1.6; color:#d4f0d0;
+  max-width:74%; margin-bottom:12px;
+}
+.modal-typing {
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(61,28,0,.5); border:1px solid rgba(244,197,66,.14);
+  padding:9px 14px; border-radius:18px; margin-bottom:10px; width:fit-content;
+}
+
+/* Modal feat cards */
+.modal-feat-cards {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  margin-bottom:12px;
+}
+@media(max-width:480px){.modal-feat-cards{grid-template-columns:repeat(2,1fr);}}
+.modal-feat-card {
+  background:rgba(30,15,0,.6); border:1px solid rgba(244,197,66,.12);
+  border-radius:10px; padding:10px 8px; text-align:center; cursor:pointer; transition:all .22s;
+}
+.modal-feat-card:hover{border-color:rgba(244,197,66,.4);background:rgba(60,25,0,.7);transform:translateY(-2px);}
+.mfc-icon{font-size:1.2rem;margin-bottom:3px;}
+.mfc-label{font-family:'Noto Sans',sans-serif;font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;color:var(--cream-muted);}
+
+/* Modal story picker */
+.modal-story-picker {
+  background:linear-gradient(135deg,rgba(40,15,0,.88),rgba(15,5,0,.92));
+  border:1px solid rgba(244,197,66,.2); border-radius:12px; padding:14px;
+  margin-bottom:12px;
+}
+.msp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.msp-title{font-family:'Playfair Display',serif;font-size:.88rem;color:var(--gold);}
+.msp-close{font-family:'Noto Sans',sans-serif;font-size:.62rem;color:var(--cream-muted);cursor:pointer;padding:3px 9px;border:1px solid rgba(200,169,122,.22);border-radius:9px;transition:all .2s;}
+.msp-close:hover{color:var(--gold);border-color:rgba(244,197,66,.4);}
+.msp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.msp-card{background:rgba(61,28,0,.5);border:1px solid rgba(244,197,66,.12);border-radius:9px;padding:10px 12px;cursor:pointer;transition:all .2s;}
+.msp-card:hover{border-color:rgba(244,197,66,.42);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.4);}
+.msp-icon{font-size:1.2rem;margin-bottom:4px;}
+.msp-name{font-family:'Playfair Display',serif;font-size:.78rem;color:var(--cream);line-height:1.3;margin-bottom:2px;}
+.msp-meta{font-family:'Noto Sans',sans-serif;font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cream-muted);opacity:.6;}
+
+/* Modal quick chips */
+.modal-quick-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 18px 8px;flex-shrink:0;}
+.mqchip{background:rgba(30,15,0,.6);border:1px solid rgba(244,197,66,.16);border-radius:16px;padding:4px 12px;font-family:'Noto Sans',sans-serif;font-size:.65rem;color:var(--cream-muted);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.mqchip:hover{border-color:rgba(244,197,66,.42);color:var(--gold);}
+
+/* Modal input */
+.modal-input-wrap {
+  display:flex; align-items:center; gap:9px;
+  margin: 0 18px 16px;
+  background:rgba(20,8,0,.8); border:1px solid rgba(244,197,66,.2);
+  border-radius:24px; padding:7px 7px 7px 16px;
+  transition:all .3s; flex-shrink:0;
+}
+.modal-input-wrap:focus-within{border-color:rgba(244,197,66,.48);box-shadow:0 0 16px rgba(255,160,40,.1);}
+#modal-chat-input{
+  flex:1; background:transparent; border:none; outline:none;
+  color:var(--cream); font-family:'Lora',serif; font-size:.86rem;
+  line-height:1.5; resize:none; min-height:22px; max-height:90px;
+}
+#modal-chat-input::placeholder{color:rgba(200,169,122,.38);font-style:italic;}
+.modal-send-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#f4c542,#e88020);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+  box-shadow:0 2px 10px rgba(244,197,66,.28);transition:all .22s;flex-shrink:0;
+}
+.modal-send-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(244,197,66,.48);}
+
 </style>
 </head>
 <body>
@@ -640,8 +805,77 @@ footer {
     <button class="nav-link active" id="nav-home"         onclick="showPage('home')">Home</button>
     <button class="nav-link"        id="nav-contribution" onclick="showPage('contribution')">Contribution</button>
   </div>
-  <button class="nav-cta" onclick="window.open('https://mamacoco-bot.github.io','_blank')">Try the Bot 🔥</button>
+  <button class="nav-cta" onclick="openChatModal()">Try the Bot 🔥</button>
 </nav>
+
+<!-- ══ CHAT MODAL ══ -->
+<div id="chat-modal-overlay">
+  <div id="chat-modal">
+
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <div class="modal-avatar">👵🏾</div>
+        <div>
+          <div class="modal-title">Mama Coco Bot</div>
+          <div class="modal-subtitle">CLRLC Cultural AI Companion</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeChatModal()">✕</button>
+    </div>
+
+    <!-- Language pills -->
+    <div class="modal-lang-pills" id="modal-lang-pills">
+      <span class="modal-lang-pill active">Yoruba</span>
+      <span class="modal-lang-pill">Igbo</span>
+      <span class="modal-lang-pill">Hausa</span>
+      <span class="modal-lang-pill">Swahili</span>
+      <span class="modal-lang-pill">Amharic</span>
+      <span class="modal-lang-pill">Zulu</span>
+      <span class="modal-lang-pill">Twi</span>
+      <span class="modal-lang-pill">Somali</span>
+      <span class="modal-lang-pill">Wolof</span>
+      <span class="modal-lang-pill">Shona</span>
+    </div>
+
+    <!-- Messages -->
+    <div id="modal-chat-area">
+      <div class="modal-mama-bubble">
+        <div class="avatar-row">
+          <div class="mama-avatar" style="width:32px;height:32px;font-size:.9rem;">👵🏾</div>
+          <div><div class="mama-name" style="font-size:.82rem;">Mama Coco Bot</div></div>
+        </div>
+        <p class="story-text" style="font-size:.86rem;">
+          <em>Ẹ káàárọ̀, ọmọ mi…</em> Come, sit beside the fire. 🔥<br/><br/>
+          The stars are bright and the ancestors are near. Which story shall we begin with?
+        </p>
+      </div>
+      <div class="modal-feat-cards" id="modal-feat-cards">
+        <div class="modal-feat-card" data-prompt="Tell me a folktale"><div class="mfc-icon">📖</div><div class="mfc-label">Folktales</div></div>
+        <div class="modal-feat-card" data-prompt="Share a wise proverb with its meaning"><div class="mfc-icon">🌿</div><div class="mfc-label">Proverbs</div></div>
+        <div class="modal-feat-card" data-prompt="Teach me a traditional song or lullaby"><div class="mfc-icon">🎶</div><div class="mfc-label">Songs</div></div>
+        <div class="modal-feat-card" data-prompt="Quiz me on vocabulary or culture"><div class="mfc-icon">🧠</div><div class="mfc-label">Quiz Me</div></div>
+        <div class="modal-feat-card" data-prompt="Teach me an interesting idiom"><div class="mfc-icon">🗣️</div><div class="mfc-label">Idioms</div></div>
+        <div class="modal-feat-card" data-prompt="Share ancestral wisdom or philosophy"><div class="mfc-icon">⭐</div><div class="mfc-label">Wisdom</div></div>
+      </div>
+    </div>
+
+    <!-- Quick chips -->
+    <div class="modal-quick-chips">
+      <span class="mqchip" data-send="Tell me a folktale">✨ Story</span>
+      <span class="mqchip" data-send="Tell me an animal tale">🦁 Animal tale</span>
+      <span class="mqchip" data-send="Teach me a proverb">💬 Proverb</span>
+      <span class="mqchip" data-send="Sing me a lullaby">🌙 Lullaby</span>
+    </div>
+
+    <!-- Input -->
+    <div class="modal-input-wrap">
+      <textarea id="modal-chat-input" rows="1" placeholder="Ask Mama Coco Bot anything…"></textarea>
+      <button class="modal-send-btn" id="modal-send-btn">🔥</button>
+    </div>
+
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════
      PAGE: HOME
@@ -657,7 +891,7 @@ footer {
       the way grandmothers once did, under a starlit sky.
     </p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="window.open('https://mamacoco-bot.github.io','_blank')">Try Mama Coco Bot 🔥</button>
+      <button class="btn-primary" onclick="openChatModal()">Try Mama Coco Bot 🔥</button>
       <button class="btn-ghost"   onclick="showPage('contribution')">Contribute a Proverb 🌿</button>
     </div>
   </div>
@@ -1042,6 +1276,101 @@ document.getElementById('dataset-submit-btn').addEventListener('click', () => {
   setTimeout(() => ta.innerHTML = '', 7000);
   ta.scrollIntoView({ behavior:'smooth', block:'center' });
 });
+
+// ════ CHAT MODAL ════
+let mConvHistory = [];
+let mSelLang = 'Yoruba';
+let mBusy = false;
+
+function openChatModal() {
+  document.getElementById('chat-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('modal-chat-input').focus(), 400);
+}
+function closeChatModal() {
+  document.getElementById('chat-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('chat-modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('chat-modal-overlay')) closeChatModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChatModal(); });
+
+document.querySelectorAll('.modal-lang-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.modal-lang-pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active'); mSelLang = p.textContent.trim();
+  });
+});
+
+const mInput = document.getElementById('modal-chat-input');
+mInput.addEventListener('input', () => { mInput.style.height='auto'; mInput.style.height=Math.min(mInput.scrollHeight,90)+'px'; });
+mInput.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();mTriggerSend();} });
+document.getElementById('modal-send-btn').addEventListener('click', mTriggerSend);
+document.querySelectorAll('.mqchip').forEach(c => c.addEventListener('click', () => mSendMsg(c.dataset.send)));
+
+const MODAL_TALES = {
+  Yoruba:  [{icon:'🕷️',name:"Anansi & the Sky God",meta:'Trickster · Wisdom'},{icon:'🦁',name:"The Lion and the Mouse",meta:'Kindness · Courage'},{icon:'🐢',name:"Why the Tortoise has a Cracked Shell",meta:'Pride · Lesson'},{icon:'🌳',name:"The Talking Baobab Tree",meta:'Nature · Mystery'},{icon:'👑',name:"The King Who Lost His Voice",meta:'Humility · Power'},{icon:'🌙',name:"Why the Moon Hides at Dawn",meta:'Creation · Night'}],
+  Igbo:    [{icon:'🦅',name:"Eneke the Bird & the Trapper",meta:'Survival · Wit'},{icon:'🐆',name:"How Leopard Got His Spots",meta:'Vanity · Consequence'},{icon:'🌾',name:"The Farmer's Grateful Yam",meta:'Gratitude · Harvest'},{icon:'🐊',name:"Tortoise and the Crocodile King",meta:'Trickster · River'},{icon:'🔥',name:"The First Fire",meta:'Creation · Courage'},{icon:'💧',name:"The River Goddess's Gift",meta:'Blessing · Water'}],
+  Hausa:   [{icon:'🐴',name:"The Horse and the Hyena",meta:'Loyalty · Desert'},{icon:'🦊',name:"Clever Fox and the Sultan",meta:'Wit · Power'},{icon:'🌵',name:"The Tree That Spoke",meta:'Nature · Prophecy'},{icon:'🏺',name:"The Clay Pot of Wishes",meta:'Greed · Lesson'},{icon:'⚔️',name:"The Brave Blacksmith",meta:'Courage · Craft'},{icon:'🌟',name:"The Girl Who Caught a Star",meta:'Dreams · Wonder'}],
+  Swahili: [{icon:'🐘',name:"Ndovu na Mbu",meta:'Elephant & Mosquito'},{icon:'🦁',name:"Simba na Sungura",meta:'Lion & Hare · Wit'},{icon:'🌊',name:"The Sea Maiden of Mombasa",meta:'Ocean · Love'},{icon:'🐒',name:"Why Monkeys Live in Trees",meta:'Mischief · Origin'},{icon:'💎',name:"The Diamond in the Mud",meta:'Patience · Treasure'},{icon:'🥁',name:"The Drum That Sang at Night",meta:'Music · Spirit'}],
+  Amharic: [{icon:'🦁',name:"Anbessa and the Shepherd Boy",meta:'Bravery · Highland'},{icon:'☕',name:"The Origin of Coffee",meta:'Discovery · Ethiopia'},{icon:'👸',name:"Queen of Sheba's Riddle",meta:'Wisdom · Legend'},{icon:'🌄',name:"The Mountain Spirit's Test",meta:'Trial · Virtue'},{icon:'🐦',name:"Why the Ibis Stands on One Leg",meta:'Patience · Origin'},{icon:'🌿',name:"The Healer's Secret Garden",meta:'Medicine · Mystery'}],
+  Zulu:    [{icon:'🦏',name:"UNomalanga and the Rhino",meta:'Courage · Savannah'},{icon:'⚡',name:"How Thunder Learned to Speak",meta:'Creation · Storm'},{icon:'🐍',name:"The Python King of the River",meta:'Respect · Water'},{icon:'🌅',name:"The First Sunrise",meta:'Origin · Light'},{icon:'🛡️',name:"The Warrior Who Feared Nothing",meta:'Bravery · Pride'},{icon:'🌺',name:"The Girl Who Planted Stars",meta:'Dreams · Night'}],
+  Twi:     [{icon:'🕷️',name:"Kwaku Anansi Becomes a Spider",meta:'Origin · Trickster'},{icon:'🥁',name:"Anansi and the Talking Drum",meta:'Music · Cleverness'},{icon:'🌞',name:"Why the Sun and Moon Are in the Sky",meta:'Creation · Akan'},{icon:'🐢',name:"The Tortoise Who Wanted Wings",meta:'Ambition · Lesson'},{icon:'👴',name:"The Old Man's Three Questions",meta:'Wisdom · Elder'},{icon:'🌿',name:"Anansi Steals the Stories",meta:'Knowledge · Legend'}],
+  Somali:  [{icon:'🐪',name:"The Camel Who Refused the Desert",meta:'Stubbornness · Wit'},{icon:'⭐',name:"The Star That Fell in Love",meta:'Romance · Sky'},{icon:'🦅',name:"The Eagle and the Nomad",meta:'Freedom · Loyalty'},{icon:'🌊',name:"The Sea Djinn's Bargain",meta:'Spirit · Coast'},{icon:'🐐',name:"The Goat Who Outsmarted a Lion",meta:'Cunning · Survival'},{icon:'🏜️',name:"The Well at the End of the World",meta:'Journey · Hope'}],
+  Wolof:   [{icon:'🦁',name:"Bouki and Leuk Daara",meta:'Hyena & Hare · Trickster'},{icon:'🌍',name:"Why Earth is the Mother of All",meta:'Creation · Respect'},{icon:'🎣',name:"The Fisherman's Impossible Wish",meta:'Greed · Sea'},{icon:'🐒',name:"Khoume the Cheeky Monkey",meta:'Mischief · Village'},{icon:'💃',name:"The Girl Who Danced with Spirits",meta:'Ritual · Night'},{icon:'🌙',name:"The Moon's Borrowed Light",meta:'Humility · Sky'}],
+  Shona:   [{icon:'🐘',name:"Nzou the Elephant's Memory",meta:'Wisdom · Memory'},{icon:'🦎',name:"How the Chameleon Got Its Colors",meta:'Origin · Beauty'},{icon:'⛰️',name:"The Spirit of Great Zimbabwe",meta:'Ancestors · Legend'},{icon:'🌧️',name:"Mwari and the First Rain",meta:'Creation · God'},{icon:'🐆',name:"The Leopard's Debt",meta:'Honor · Consequence'},{icon:'🌾',name:"The Girl Who Fed the Ancestors",meta:'Respect · Harvest'}],
+};
+
+document.querySelectorAll('.modal-feat-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const label = card.querySelector('.mfc-label').textContent.trim();
+    if (label === 'Folktales') { mShowStoryPicker(); return; }
+    mSendMsg(card.dataset.prompt + ` in the ${mSelLang} language`);
+  });
+});
+
+function mShowStoryPicker() {
+  document.getElementById('modal-story-picker-panel')?.remove();
+  const tales = MODAL_TALES[mSelLang] || MODAL_TALES['Yoruba'];
+  const panel = document.createElement('div');
+  panel.className='modal-story-picker'; panel.id='modal-story-picker-panel';
+  panel.innerHTML=`<div class="msp-head"><div class="msp-title">📖 ${mSelLang} Folktales</div><span class="msp-close" id="msp-close">✕</span></div><div class="msp-grid">${tales.map(t=>`<div class="msp-card" data-title="${t.name}"><div class="msp-icon">${t.icon}</div><div class="msp-name">${t.name}</div><div class="msp-meta">${t.meta}</div></div>`).join('')}</div>`;
+  const mca = document.getElementById('modal-chat-area');
+  mca.appendChild(panel); mScrollChat();
+  panel.querySelector('#msp-close').addEventListener('click', ()=>panel.remove());
+  panel.querySelectorAll('.msp-card').forEach(sc=>{
+    sc.addEventListener('click',()=>{panel.remove();document.getElementById('modal-feat-cards').style.display='none';mSendMsg(`Tell me the ${mSelLang} folktale: "${sc.dataset.title}"`);});
+  });
+}
+
+function mTriggerSend(){const t=mInput.value.trim();if(t)mSendMsg(t);}
+function mAddUserBubble(text){const el=document.createElement('div');el.className='modal-user-bubble';el.textContent=text;document.getElementById('modal-chat-area').appendChild(el);mScrollChat();}
+function mAddTyping(){const el=document.createElement('div');el.className='modal-typing';el.id='modal-typer';el.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';document.getElementById('modal-chat-area').appendChild(el);mScrollChat();}
+function mRemoveTyping(){document.getElementById('modal-typer')?.remove();}
+function mAddMamaBubble(text){const el=document.createElement('div');el.className='modal-mama-bubble';el.innerHTML=`<div class="avatar-row"><div class="mama-avatar" style="width:32px;height:32px;font-size:.9rem;">👵🏾</div><div><div class="mama-name" style="font-size:.82rem;">Mama Coco Bot</div></div></div><p class="story-text" style="font-size:.86rem;">${mFmtText(text)}</p>`;document.getElementById('modal-chat-area').appendChild(el);mScrollChat();}
+function mFmtText(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\n\n/g,'<br/><br/>').replace(/\n/g,'<br/>');}
+function mScrollChat(){setTimeout(()=>{const a=document.getElementById('modal-chat-area');a.scrollTop=a.scrollHeight;},50);}
+function mSetBusy(v){mBusy=v;mInput.disabled=v;document.getElementById('modal-send-btn').disabled=v;}
+
+const M_SYSTEM=`You are Mama Coco Bot, a warm, wise African grandmother AI companion by CLRLC. Speak like a grandmother by a night fire telling stories to grandchildren. Warm, nurturing, wise. Use phrases from the language being discussed (with translations). For proverbs: give original text, phonetics, meaning. You cover Yoruba, Igbo, Hausa, Swahili, Amharic, Zulu, Twi, Somali, Wolof, Shona. Note the language you draw from. End longer responses with a gentle invitation to continue.`;
+
+async function mSendMsg(userText){
+  if(mBusy)return;
+  mInput.value='';mInput.style.height='auto';
+  document.getElementById('modal-feat-cards').style.display='none';
+  mAddUserBubble(userText);mSetBusy(true);mAddTyping();
+  mConvHistory.push({role:'user',content:`[Language: ${mSelLang}]\n${userText}`});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:M_SYSTEM,messages:mConvHistory})});
+    const data=await res.json();
+    const reply=data.content?.map(b=>b.text||'').join('')||'The fire flickers… let me try again, my child.';
+    mConvHistory.push({role:'assistant',content:reply});
+    mRemoveTyping();mAddMamaBubble(reply);
+  }catch(e){mRemoveTyping();mAddMamaBubble('*Ehn, the night wind interrupted us…* Something went wrong. Try again, my child. 🔥');}
+  finally{mSetBusy(false);mInput.focus();}
+}
+
 </script>
 </body>
 </html>
