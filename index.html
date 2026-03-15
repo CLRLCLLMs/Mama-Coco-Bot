@@ -617,18 +617,9 @@ body {
 <div id="sun"></div>
 <div id="ground"></div>
 
-<!-- Fire -->
+<!-- Fire glow only -->
 <div id="fire-wrap">
   <div class="fire-glow"></div>
-  <div style="position:relative;display:flex;align-items:flex-end;gap:2px;">
-    <div class="flame fl-l"></div>
-    <div class="flame fl-main"></div>
-    <div class="flame fl-r"></div>
-    <div class="smoke" style="--sd:2.8s;--ss:0s;--sx:8px;"></div>
-    <div class="smoke" style="--sd:3.4s;--ss:.6s;--sx:-12px;"></div>
-    <div class="smoke" style="--sd:2.2s;--ss:1.2s;--sx:3px;"></div>
-  </div>
-  <div class="logs"></div>
 </div>
 
 
@@ -641,6 +632,7 @@ body {
   </div>
   <div class="nav-links">
     <button class="nav-link active" id="nav-home"         onclick="showPage('home')">Home</button>
+    <button class="nav-link"        id="nav-about"        onclick="goToAbout()">About</button>
     <button class="nav-link"        id="nav-contribution" onclick="showPage('contribution')">Contribution</button>
   </div>
   <div class="nav-right">
@@ -671,32 +663,7 @@ body {
     </div>
   </div>
 
-  <!-- What is Mama Coco Bot -->
-  <div id="about-anchor" class="what-section fade-up d2">
-    <div class="section-divider"><span class="sdlabel">✦ About the Project ✦</span></div>
 
-    <div class="vision-quote">
-      <blockquote>
-        When a grandmother speaks, a library opens. Mama Coco Bot is our commitment to keep those libraries alive — in every language, for every generation.
-      </blockquote>
-      <cite>— CLRLC, Center for Low-Resource Languages and Cultures</cite>
-    </div>
-
-    <div class="what-grid">
-      <div class="what-card">
-        <div class="what-card-icon"></div>
-        <h3>What Is Mama Coco Bot?</h3>
-        <p>Mama Coco Bot is an AI-powered cultural companion designed to preserve and share African oral traditions — folktales, proverbs, songs, idioms and ancestral wisdom — in their original languages.</p>
-      </div>
-      <div class="what-card">
-        <div class="what-card-icon"></div>
-        <h3>Why It Matters</h3>
-        <p>Every two weeks, a language disappears from the earth. AI has traditionally ignored low-resource languages. We use it instead to carry them forward — ensuring that the stories our grandmothers told never fade into silence, and that proverbs passed across generations remain alive.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Features -->
   <div class="home-features fade-up d3">
     <div class="feat-tile">
       <div class="feat-tile-icon">📖</div>
@@ -750,6 +717,24 @@ body {
     </div>
   </div>
 
+  <!-- What is Mama Coco Bot — About -->
+  <div id="about-anchor" class="what-section fade-up d4">
+    <div class="section-divider"><span class="sdlabel">✦ About the Project ✦</span></div>
+
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-icon"></div>
+        <h3>What Is Mama Coco Bot?</h3>
+        <p>Mama Coco Bot is an AI-powered cultural companion designed to preserve and share African oral traditions — folktales, proverbs, songs, idioms and ancestral wisdom — in their original languages.</p>
+      </div>
+      <div class="what-card">
+        <div class="what-card-icon"></div>
+        <h3>Why It Matters</h3>
+        <p>Every two weeks, a language disappears from the earth. AI has traditionally ignored low-resource languages. We use it instead to carry them forward — ensuring that the stories our grandmothers told never fade into silence, and that proverbs passed across generations remain alive.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Coming Soon Bot Banner -->
   <div class="coming-soon-banner fade-up d5">
     <div class="csb-inner">
@@ -762,10 +747,7 @@ body {
     </div>
   </div>
 
-  <footer>Mama Coco Bot · CLRLC · Preserving Languages Through Story · 2025</footer>
-</div>
 
-<!-- ══ PAGE: CONTRIBUTION ══ -->
 <div class="page" id="page-contribution">
   <div class="contribution-wrap">
 
@@ -800,8 +782,8 @@ body {
           <div class="form-field">
             <label class="field-label">Type</label>
             <select class="f-select" id="c-type">
-              <option value="proverb">Proverb</option>
-              <option value="idiom">Idiom</option>
+              <option value="proverb"> Proverb</option>
+              <option value="idiom"> Idiom</option>
             </select>
           </div>
           <div class="form-field">
@@ -866,8 +848,8 @@ body {
           <div class="form-field">
             <label class="field-label">Dataset Type <span class="field-req">*</span></label>
             <select class="f-select" id="ds-type">
-              <option value="proverbs">Proverbs</option>
-              <option value="idioms">Idioms</option>
+              <option value="proverbs"> Proverbs</option>
+              <option value="idioms"> Idioms</option>
             </select>
           </div>
           <div class="form-field">
@@ -960,17 +942,14 @@ body {
       </div>
       <div class="wall-filters" id="wall-filters">
         <button class="wf-btn active" data-filter="all">All</button>
-        <button class="wf-btn" data-filter="proverb">🌿 Proverbs</button>
-        <button class="wf-btn" data-filter="idiom">🗣️ Idioms</button>
+        <button class="wf-btn" data-filter="proverb">Proverbs</button>
+        <button class="wf-btn" data-filter="idiom">Idioms</button>
       </div>
       <div class="wall-grid" id="wall-grid"></div>
     </div>
 
   </div>
-  <footer>Mama Coco Bot · CLRLC · Preserving Languages Through Story · 2025</footer>
-</div>
 
-<!-- ══ JAVASCRIPT ══ -->
 <script>
 // ════ THEME ════
 const DAY_START = 6, DAY_END = 18;
@@ -1009,10 +988,15 @@ function showPage(name){
   const hide=name==='contribution';
   document.getElementById('fire-wrap').style.opacity=hide?'0':'';
   document.getElementById('ground').style.opacity   =hide?'0':'1';
-  document.querySelectorAll('.sil').forEach(s=>s.style.opacity=hide?'0':'');
   document.getElementById('sun').style.opacity     =hide?'0':'';
   document.getElementById('sun-rays').style.opacity=hide?'0':'';
   window.scrollTo(0,0);
+}
+function goToAbout(){
+  showPage('home');
+  setTimeout(()=>document.getElementById('about-anchor').scrollIntoView({behavior:'smooth'}),80);
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('nav-about').classList.add('active');
 }
 
 // ════ CONTRIBUTION ════
@@ -1049,10 +1033,10 @@ function renderWall(){
   const filtered=wallFilter==='all'?contributions:contributions.filter(c=>c.type===wallFilter);
   document.getElementById('wall-count').textContent=`${contributions.length} contribution${contributions.length!==1?'s':''}`;
   const grid=document.getElementById('wall-grid');
-  if(!filtered.length){grid.innerHTML='<div class="wall-empty"><span>🌿</span>No contributions yet for this filter.</div>';return;}
+  if(!filtered.length){grid.innerHTML='<div class="wall-empty"><span></span>No contributions yet for this filter.</div>';return;}
   grid.innerHTML=filtered.map(c=>`
     <div class="wall-card">
-      <span class="wc-badge ${c.type==='proverb'?'badge-p':'badge-i'}">${c.type==='proverb'?'🌿 Proverb':'🗣️ Idiom'}</span>
+      <span class="wc-badge ${c.type==='proverb'?'badge-p':'badge-i'}">${c.type==='proverb'?'Proverb':'Idiom'}</span>
       <div class="wc-text">${c.text}</div>
       <div class="wc-meaning">${c.meaning}</div>
       <div class="wc-foot">
@@ -1092,7 +1076,7 @@ document.getElementById('submit-btn').addEventListener('click',()=>{
   document.getElementById('cm-count').textContent='0';
   updateStatCount();
   const ta=document.getElementById('toast-area');
-  ta.innerHTML=`<div class="toast"><span class="toast-icon">🌿</span><div class="toast-text"><strong>Thank you, keeper of words!</strong><br/>Your ${type} in ${lang} has been received and will be reviewed by the CLRLC team.</div></div>`;
+  ta.innerHTML=`<div class="toast"><span class="toast-icon"></span><div class="toast-text"><strong>Thank you, keeper of words!</strong><br/>Your ${type} in ${lang} has been received and will be reviewed by the CLRLC team.</div></div>`;
   setTimeout(()=>ta.innerHTML='',7000);
   ta.scrollIntoView({behavior:'smooth',block:'center'});
 });
