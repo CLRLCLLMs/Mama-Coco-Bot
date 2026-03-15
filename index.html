@@ -596,9 +596,7 @@ body {
 }
 .file-remove-btn:hover { background: rgba(255,100,80,.1); border-color: rgba(255,100,80,.7); color: #ff7060; }
 
-  font-family:'Noto Sans',sans-serif;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--footer-col);transition:color var(--theme-t) ease;
-}
+
 </style>
 </head>
 <body>
@@ -725,12 +723,12 @@ body {
       <div class="what-card">
         <div class="what-card-icon"></div>
         <h3>What Is Mama Coco Bot?</h3>
-        <p>Mama Coco Bot is an AI-powered cultural companion designed to preserve and share African oral traditions — folktales, proverbs, songs, idioms and ancestral wisdom — in their original languages.</p>
+        <p>Mama Coco Bot is an AI-powered cultural companion designed to preserve and share African oral traditions folktales, proverbs, songs, idioms and ancestral wisdom in their original languages.</p>
       </div>
       <div class="what-card">
         <div class="what-card-icon"></div>
         <h3>Why It Matters</h3>
-        <p>Every two weeks, a language disappears from the earth. AI has traditionally ignored low-resource languages. We use it instead to carry them forward — ensuring that the stories our grandmothers told never fade into silence, and that proverbs passed across generations remain alive.</p>
+        <p>Every two weeks, a language disappears and with it, its stories, proverbs, and the irreplaceable wisdom of generations. AI has traditionally ignored low-resource languages. Mama Coco Bot exists to change that.</p>
       </div>
     </div>
   </div>
@@ -741,20 +739,22 @@ body {
       <div class="csb-icon"></div>
       <div class="csb-text">
         <h3>Mama Coco Bot is Coming</h3>
-        <p>The interactive AI companion is currently in development and will launch once our community archive reaches the depth needed to represent each language authentically. The more you contribute now, the sooner she arrives. Help us build her knowledge — submit a proverb, idiom or dataset today.</p>
+        <p>The interactive AI companion is currently in development and will launch once our community archive reaches the depth needed to represent each language authentically. Submit a proverb, idiom or dataset today.</p>
       </div>
       <button class="csb-btn" onclick="showPage('contribution')">Contribute Now 🌿</button>
     </div>
   </div>
 
+</div>
 
+<!-- ══ PAGE: CONTRIBUTION ══ -->
 <div class="page" id="page-contribution">
   <div class="contribution-wrap">
 
     <div class="comm-hero fade-up">
       <p class="section-label">Living Archive</p>
       <h2>Build the Archive</h2>
-      <p>Every word you share is a seed planted for the future. Submit a proverb, an idiom, or an entire dataset — and help Mama Coco Bot speak your language with the wisdom it deserves. 🌿</p>
+      <p>Every word you share is a seed planted for the future. Submit a proverb, an idiom, or an entire dataset — and help Mama Coco Bot speak your language with the wisdom it deserves.</p>
     </div>
 
 
@@ -764,7 +764,7 @@ body {
       <div class="why-icon"></div>
       <div class="why-body">
         <h4>Why Your Contribution Matters</h4>
-        <p>AI models are only as culturally aware as the data they are trained on. Most African languages are drastically underrepresented in existing AI datasets. Every proverb or idiom you submit directly shapes what Mama Coco Bot knows, how authentic her responses feel, and how many people can connect with their heritage through her.</p>
+        <p>AI models are only as culturally aware as the data they are trained on. Most African languages are drastically underrepresented in existing AI datasets. Every proverb or idiom you submit directly shapes what Mama Coco Bot knows, how authentic it responses feel, and how many people can connect with their heritage through it.</p>
       </div>
     </div>
 
@@ -782,8 +782,8 @@ body {
           <div class="form-field">
             <label class="field-label">Type</label>
             <select class="f-select" id="c-type">
-              <option value="proverb"> Proverb</option>
-              <option value="idiom"> Idiom</option>
+              <option value="proverb">Proverb</option>
+              <option value="idiom">Idiom</option>
             </select>
           </div>
           <div class="form-field">
@@ -841,15 +841,14 @@ body {
           <div class="dsb-icon"></div>
           <div>
             <div class="dsb-title">Submit a Dataset</div>
-            <div class="dsb-body">Have a collection of proverbs or idioms in an African language? Share it with CLRLC to help train and improve Mama Coco Bot. Every dataset, no matter how small, matters.</div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-field">
             <label class="field-label">Dataset Type <span class="field-req">*</span></label>
             <select class="f-select" id="ds-type">
-              <option value="proverbs"> Proverbs</option>
-              <option value="idioms"> Idioms</option>
+              <option value="proverbs">Proverbs</option>
+              <option value="idioms">Idioms</option>
             </select>
           </div>
           <div class="form-field">
@@ -929,7 +928,7 @@ body {
         </div>
         <div class="submit-row">
           <p class="submit-note">Dataset submissions go directly to the CLRLC research team for review. We will never share your data or contact details without permission.</p>
-          <button class="submit-btn" id="dataset-submit-btn">Submit Dataset </button>
+          <button class="submit-btn" id="dataset-submit-btn">Submit Dataset</button>
         </div>
       </div>
     </div>
@@ -949,6 +948,7 @@ body {
     </div>
 
   </div>
+</div>
 
 <script>
 // ════ THEME ════
@@ -1008,7 +1008,7 @@ let contributions = [
 ];
 let wallFilter='all';
 
-function updateStatCount(){ document.getElementById('stat-contrib').textContent=contributions.length; }
+function updateStatCount(){ /* stat element removed */ }
 
 function switchCommTab(tab){
   document.getElementById('ctab-submit').classList.toggle('active',  tab==='submit');
@@ -1071,12 +1071,12 @@ document.getElementById('submit-btn').addEventListener('click',()=>{
     return;
   }
   contributions.unshift({type,lang,text,meaning,name:name||null,region:region||null,likes:0});
-  ['c-text','c-meaning','c-name','c-region','c-phonetic'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['c-text','c-meaning','c-name','c-region','c-email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('ct-count').textContent='0';
   document.getElementById('cm-count').textContent='0';
   updateStatCount();
   const ta=document.getElementById('toast-area');
-  ta.innerHTML=`<div class="toast"><span class="toast-icon"></span><div class="toast-text"><strong>Thank you, keeper of words!</strong><br/>Your ${type} in ${lang} has been received and will be reviewed by the CLRLC team.</div></div>`;
+  ta.innerHTML=`<div class="toast"><span class="toast-icon">🌿</span><div class="toast-text"><strong>Thank you, keeper of words!</strong><br/>Your ${type} in ${lang} has been received and will be reviewed by the CLRLC team.</div></div>`;
   setTimeout(()=>ta.innerHTML='',7000);
   ta.scrollIntoView({behavior:'smooth',block:'center'});
 });
@@ -1134,7 +1134,6 @@ document.getElementById('dataset-submit-btn').addEventListener('click',()=>{
   ta.scrollIntoView({behavior:'smooth',block:'center'});
 });
 
-updateStatCount();
 renderWall();
 </script>
 </body>
